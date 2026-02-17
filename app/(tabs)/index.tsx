@@ -1,7 +1,20 @@
 import { router } from "expo-router";
+import { useEffect } from "react";
 import { Pressable, Text, View } from "react-native";
+import { supabase } from "../../lib/supabase";
 
 export default function Home() {
+  useEffect(() => {
+    (async () => {
+      const { data, error } = await supabase
+        .from("healthcheck")
+        .select("*")
+        .limit(1);
+
+      console.log("healthcheck", { data, error });
+    })();
+  }, []);
+
   return (
     <View style={{ flex: 1, justifyContent: "center", padding: 20 }}>
       <Text style={{ fontSize: 30, fontWeight: "700" }}>CampusMatch</Text>
